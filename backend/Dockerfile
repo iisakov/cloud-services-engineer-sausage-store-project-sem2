@@ -5,6 +5,7 @@
 FROM maven:3.8.2-openjdk-16-slim as builder
 # задаём переменную VERSION, которая будет использоваться для сборки проекта
 ARG VERSION=${VERSION}
+ARG VERSION=1.0.0
 WORKDIR /usr/src/app
 COPY ./src ./src
 COPY *.xml ./
@@ -14,6 +15,7 @@ RUN mvn package -Dversion.application=${VERSION}
 # release
 FROM openjdk:16-jdk-alpine
 ARG VERSION=${VERSION}
+ARG VERSION=1.0.0
 WORKDIR /app
 # создаём пользователя jaruser
 RUN addgroup --system jaruser \
