@@ -1,0 +1,45 @@
+# количество реплик приложения
+replicas: 2
+
+# неймспейс
+namespace: r-devops-magistracy-project-2sem-417360059
+
+# аргументы запуска podinfo
+arguments:
+  - --port=9000
+  - --level=debug
+
+# параметры Docker-образа
+image:
+  repository: ghcr.io/stefanprodan/podinfo
+  tag: "6.6.3"
+
+# переменные окружения
+env:
+  PODINFO_UI_MESSAGE: Yandex Practicum Podinfo
+  PODINFO_UI_LOGO: https://yastatic.net/q/logoaas/v2/Яндекс.svg
+  PODINFO_UI_COLOR: "#ffdb4d"
+
+# настройки CPU и RAM
+resources:
+  limits:
+    memory: 256Mi
+    cpu: 100m
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+# номер порта
+service:
+  port: 9000
+
+# параметры Ingress
+ingress:
+  enabled: true
+  host: podinfo-r-devops-magistracy-project-2sem-417360059.kube.practicum-services.tech
+  # доменное имя вашего Ingress. Если не настраивали, то указывайте localhost
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: "http01-clusterissuer"
+  tls: true
+  # если у вас настроены сертификаты
