@@ -13,7 +13,7 @@ frontend:
   service:
     port: 80
   ingress:
-    host: front-isakov_arh.2sem.students-projects.ru
+    host: front-iisakov.2sem.students-projects.ru
     secretName: 2sem-students-projects-wildcard-secret
     path: /
     pathType: Prefix
