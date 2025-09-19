@@ -79,11 +79,14 @@ jobs:
           with:
             version: v3.4.0
 
-        - name: Add nexus repo and push helm-chart
+        - name: Add nexus repo
           run: |
-            helm plugin install https://github.com/chartmuseum/helm-push
-            helm repo add chartmuseum $NEXUS_HELM_REPO --username $NEXUS_HELM_REPO_USER --password $NEXUS_HELM_REPO_PASSWORD --upgrade
+            helm repo add chartmuseum $NEXUS_HELM_REPO --username $NEXUS_HELM_REPO_USER --password $NEXUS_HELM_REPO_PASSWORD
+
+        - name: Push helm chart to nexus
+          run: |
             helm cm-push sausage-store-chart --version=${{ github.sha }} chartmuseum
+
   # Деплоим приложения в кластер Kubernetes с помощью helm-чарт
   deploy_helm_chart_to_kubernetes:
       name: Deploy Helm Chart To Kubernetes
