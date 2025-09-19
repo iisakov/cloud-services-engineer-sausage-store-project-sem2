@@ -85,7 +85,7 @@ jobs:
 
         - name: Push helm chart to nexus
           run: |
-            helm cm-push sausage-store-chart --version=${{ github.sha }} chartmuseum
+            helm push sausage-store-chart --version=${{ github.sha }} chartmuseum
 
   # Деплоим приложения в кластер Kubernetes с помощью helm-чарт
   deploy_helm_chart_to_kubernetes:
