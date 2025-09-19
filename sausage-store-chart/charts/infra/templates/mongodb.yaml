@@ -60,5 +60,5 @@ kind: ConfigMap
 metadata:
   name: mongodb-conf
 data:
-  MONGO_INITDB_ROOT_USERNAME: {{ .Values.mongodb.env.MONGO_INITDB_ROOT_USERNAME }}
-  MONGO_INITDB_ROOT_PASSWORD: {{ .Values.mongodb.env.MONGO_INITDB_ROOT_PASSWORD }}
+  MONGO_INITDB_ROOT_USERNAME: "{{ .Values.mongodb.env.MONGO_INITDB_ROOT_USERNAME }}"
+  MONGO_INITDB_ROOT_PASSWORD: "{{ .Values.mongodb.env.MONGO_INITDB_ROOT_PASSWORD }}"
