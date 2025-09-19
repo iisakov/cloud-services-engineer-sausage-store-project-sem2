@@ -56,9 +56,29 @@ backend:
       cpu: "1"
   containerPort: 8080
   livenessProbe:
-  ### Опишите LivenessProbe для бэкенда
+    httpGet:
+      path: /actuator/health
+      port: 8080
+      scheme: HTTP
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
   vpa:
-  ### Опишите VPA для бэкенда
+    enabled: true
+    updatePolicy:
+      updateMode: "Off"
+    resourcePolicy:
+      containerPolicies:
+        - containerName: "*"
+          minAllowed:
+            cpu: 300m
+            memory: 180Mi
+          maxAllowed:
+            cpu: 800m
+            memory: 800Mi
+          controlledResources: ["cpu", "memory"]
 
 backend-report:
   replicas: 1
