@@ -107,7 +107,9 @@ jobs:
         shell: bash
         run: |
           mkdir -p ~/.kube
-          echo "${{ secrets.KUBE_CONFaIG }}" > ~/.kube/config
+          echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
+          # Проверяем конфиг
+          kubectl cluster-info
 
       - name: Deploy Helm chart
         run: |
