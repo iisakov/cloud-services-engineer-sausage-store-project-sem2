@@ -11,7 +11,6 @@ env:
   NEXUS_HELM_REPO_PASSWORD: ${{ secrets.NEXUS_HELM_REPO_PASSWORD }}
   SAUSAGE_STORE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
   KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-  VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
 
 jobs:
   # Сборка и пуш образов в докерхаб:
@@ -110,8 +109,5 @@ jobs:
             chart: 'sausage-store-chart'
             version: '${{ github.sha }}'
             token: '${{ github.token }}'
-            values: |
-              global.vault.name=${{ secrets.VAULT_HOST }}
-              global.vault.token=${{ secrets.VAULT_TOKEN }}
           env:
-            KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
+            KUBECONFIG_FILE: '${{ secrets.KUBE_CONFIG }}'
