@@ -1,36 +1,95 @@
-# Sausage Store
+# Сосисочная у дома 🛒
+Проект семестровой работы студента первого курса специальности DevOps - развертывание полнофункционального веб-приложения интернет-магазина на платформе Kubernetes с использованием пакетного менеджера Helm.
 
-![image](https://user-images.githubusercontent.com/9394918/121517767-69db8a80-c9f8-11eb-835a-e98ca07fd995.png)
+## 🏗️ Архитектура проекта
+### Микросервисная структура:
+- Frontend - Angular приложение
+- Backend - Java Spring Boot API
+- Backend-Report - Go сервис для отчетности
+- Базы данных - PostgreSQL и MongoDB
 
+### Технологический стек:
+- Kubernetes - оркестрация контейнеров 
+- Helm - пакетный менеджер для развертывания 
+- Docker - контейнеризация приложений 
+- PostgreSQL - реляционная база данных 
+- MongoDB - документоориентированная БД 
+- Java Spring Boot - основной backend 
+- Golang - сервис отчетности 
+- Angular - фронтенд приложение
 
-## Technologies used
-
-* Frontend – TypeScript, Angular.
-* Backend  – Java 16, Spring Boot, Spring Data.
-* Database – H2.
-
-## Installation guide
-### Backend
-
-Install Java 16 and maven and run:
-
-```bash
-cd backend
-mvn package
-cd target
-java -jar sausage-store-0.0.1-SNAPSHOT.jar
+## 📁 Структура проекта
+```text
+sausage-store/
+├── sausage-store-chart/     # Helm chart основного приложения
+│   ├── charts/
+│   │   ├── backend/         # Java backend
+│   │   ├── backend-report/  # Go report service
+│   │   ├── frontend/        # Angular frontend
+│   │   └── infra/           # Базы данных (PostgreSQL + MongoDB)
+│   └── values.yaml          # Конфигурационные значения
+├── backend/                 # Исходный код Java приложения
+├── backend-report/          # Исходный код Go сервиса
+├── frontend/                # Исходный код Angular приложения
+├── podinfo/                 # Дополнительный Helm chart
+└── docker-compose.yml       # Локальная разработка
 ```
 
-### Frontend
+## 🚀 Быстрый старт
 
-Install NodeJS and npm on your computer and run:
 
+### Предварительные требования:
+- Kubernetes кластер
+- Helm 3+
+- kubectl
+
+### Установка:
 ```bash
-cd frontend
-npm install
-npm run build
-npm install -g http-server
-sudo http-server ./dist/frontend/ -p 80 --proxy http://localhost:8080
+# Добавление репозитория (если необходимо)
+helm repo add sausage-store /path/to/chart
+
+# Установка приложения
+helm install sausage-store sausage-store-chart/
+Обновление:
+bash
+helm upgrade sausage-store sausage-store-chart/
+```
+## ⚙️ Конфигурация
+### Основные настройки в sausage-store-chart/values.yaml:
+- Ресурсы CPU/Memory для каждого сервиса
+- Параметры баз данных
+- Настройки репликации
+- Конфигурация ingress
+
+## 📊 Мониторинг
+Приложение включает:
+
+- Health checks для всех сервисов
+- Prometheus метрики
+- Готовность к горизонтальному масштабированию (HPA)
+
+## 🛠️ Разработка
+### Локальный запуск:
+```bash
+docker-compose up -d
+```
+### Сборка образов:
+```bash
+docker build -t sausage-store-backend ./backend
+docker build -t sausage-store-frontend ./frontend
+docker build -t sausage-store-report ./backend-report
 ```
 
-Then open your browser and go to [http://localhost](http://localhost)
+## 📝 Особенности реализации
+- Миграции БД через Flyway для PostgreSQL
+- ConfigMap и Secrets для управления конфигурацией
+- Resource quotas для контроля ресурсов
+- Persistent volumes для хранения данных
+- Service discovery через Kubernetes DNS
+
+## 🔧 Troubleshooting
+- Проверка статуса:
+```bash
+kubectl get pods,svc,pvc
+kubectl describe resourcequota
+```
