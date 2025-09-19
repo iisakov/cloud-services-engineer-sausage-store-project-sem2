@@ -76,8 +76,8 @@ backend:
             cpu: 300m
             memory: 180Mi
           maxAllowed:
-            cpu: 800m
-            memory: 800Mi
+            cpu: 600m
+            memory: 360Mi
           controlledResources: ["cpu", "memory"]
 
 backend-report:
@@ -98,11 +98,11 @@ backend-report:
     dbpassword: reportspassword
   resources:
     requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
       cpu: 200m
       memory: 128Mi
-    limits:
-      cpu: 400m
-      memory: 256Mi
   hpa:
     enabled: true
     minReplicas: 1
