@@ -61,11 +61,22 @@ backend:
   ### Опишите VPA для бэкенда
 
 backend-report:
-### Опишите значения для backend-report
-### Приложение должно использовать стратегию Recreate
-### Приложение использует переменную PORT - порт, на котором оно запустится и DB - Uri-подключение к mongodb. 
-### DB положите в Secret, PORT в ConfigMap
-### Опишите HPA для backend-report
+  replicas: 1
+  strategy:
+    type: Recreate
+  image: d1zero/sausage-backend-report:latest
+  service:
+    port: 8080
+  config:
+    port: 8080
+  containerPort: 8080
+  resources:
+    requests:
+      cpu: 200m
+      memory: 128Mi
+    limits:
+      cpu: 400m
+      memory: 256Mi
 
 infra:
   postgresql:
