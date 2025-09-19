@@ -6,7 +6,6 @@ global:
     vaultToken: someToken
 
 frontend:
-### В чарте frontend отсутствуют некоторые важные файлы. Поймите какие и опишите их.
   replicas: 1
   revisionHistoryLimit: 15
   strategy:
@@ -14,18 +13,19 @@ frontend:
   service:
     port: 80
   ingress:
-    host: kirillpudov.students-projects.ru
+    host: front-isakov_arh.2sem.students-projects.ru
+    secretName: 2sem-students-projects-wildcard-secret
     path: /
     pathType: Prefix
   containerPort: 80
-  image_tag: latest
+  image: iisakov/sausage-frontend:latest
   resources:
     requests:
       memory: "128Mi"
       cpu: "100m"
     limits:
-      memory: "128Mi"
-      cpu: "250m"
+      memory: "256Mi"
+      cpu: "200m"
   nginxConf: nginx.conf
 
 backend:
@@ -45,7 +45,7 @@ backend:
   replicas: 1
   strategy:
   ### Опишите стратегию RollingUpdate для бэкенда
-  image: YOUR_DOCKERHUB/sausage-backend:latest
+  image: iisakov/sausage-backend:latest
   imagePullPolicy: Always
   resources:
     requests:
@@ -84,7 +84,7 @@ backend-report:
   replicas: 1
   strategy:
     type: Recreate
-  image: d1zero/sausage-backend-report:latest
+  image: iisakov/sausage-backend-report:latest
   service:
     port: 8081
   config:

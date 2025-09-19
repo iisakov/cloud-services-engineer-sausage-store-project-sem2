@@ -16,7 +16,7 @@ spec:
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   replicas: {{ .Values.replicas }}
   strategy:
-    type: {{ .Values.strategy.type }}
+{{ toYaml .Values.strategy | indent 4 }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}-{{ .Chart.Name }}
@@ -30,19 +30,19 @@ spec:
           image: {{ .Values.image }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           resources:
-{{ toYaml .Values.resources | indent 12 }} 
+{{ toYaml .Values.resources | indent 12 }}
           ports:
             - name: {{ .Chart.Name }}
               containerPort: {{ .Values.containerPort }}
           volumeMounts:
-          - name: {{ .Release.Name }}-{{ .Chart.Name }}-conf
-            mountPath: /etc/nginx/{{ .Values.nginxConf }}
-            subPath: {{ .Values.nginxConf }}
-            readOnly: true
+            - name: {{ .Release.Name }}-{{ .Chart.Name }}-confmap
+              mountPath: /etc/nginx/{{ .Values.nginxConf }}
+              subPath: {{ .Values.nginxConf }}
+              readOnly: true
       volumes:
-        - name: {{ .Release.Name }}-{{ .Chart.Name }}-conf
+        - name: {{ .Release.Name }}-{{ .Chart.Name }}-confmap
           configMap:
-            name: {{ .Release.Name }}-{{ .Chart.Name }}-conf
+            name: {{ .Release.Name }}-{{ .Chart.Name }}-confmap
             items:
               - key: {{ .Values.nginxConf }}
                 path: {{ .Values.nginxConf }} 
